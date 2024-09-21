@@ -3,7 +3,7 @@ import { format, subDays, addDays, isToday } from 'date-fns';
 import { ChevronLeft, ChevronRight, Plus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
-import ProgressCard from './ProgressCard';
+import { Progress } from "@/components/ui/progress";
 import {
   Table,
   TableBody,
@@ -16,18 +16,16 @@ import { ActivityContext } from './contexts/ActivityContext';
 import { UserContext } from './contexts/UserContext';
 import { ModeToggle } from '@/components/mode-toggle';
 import { useToast } from '@/hooks/use-toast';
-import LogStepsDialog from './LogStepsDialog';
 import LogActivityDialog from './LogActivityDialog';
-import MyStatsDialog from './MyStatsDialog';
+import LogStepsDialog from './LogStepsDialog';
 
 export default function HomeScreen() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const { activities, getTotalCaloriesBurned, getTotalSteps } = useContext(ActivityContext);
   const { user } = useContext(UserContext);
   const { toast } = useToast();
-  const [isLogStepsOpen, setIsLogStepsOpen] = useState(false);
   const [isLogActivityOpen, setIsLogActivityOpen] = useState(false);
-  const [isMyStatsOpen, setIsMyStatsOpen] = useState(false);
+  const [isLogStepsOpen, setIsLogStepsOpen] = useState(false);
 
   const handlePrevDay = () => setCurrentDate(subDays(currentDate, 1));
   const handleNextDay = () => setCurrentDate(addDays(currentDate, 1));
@@ -39,14 +37,11 @@ export default function HomeScreen() {
     format(new Date(activity.date), 'yyyy-MM-dd') === format(currentDate, 'yyyy-MM-dd')
   );
 
-  const handleMyStatsClick = () => {
-    setIsMyStatsOpen(true);
-  };
-
   const handleLogStepsClick = () => {
     if (isToday(currentDate)) {
       setIsLogStepsOpen(true);
     } else {
+      setIsLogStepsOpen(false);
       toast({
         title: 'Error',
         description: 'You can only log steps for the current date.',
@@ -75,7 +70,9 @@ export default function HomeScreen() {
         <h1 className="text-2xl font-bold mb-4 sm:mb-0">ACT4 FITNESS</h1>
         <div className="flex items-center space-x-4">
           <ModeToggle />
-          <Button variant="outline" onClick={handleMyStatsClick}>My Stats</Button>
+          <Link to="/my-stats">
+            <Button variant="outline">My Stats</Button>
+          </Link>
         </div>
       </header>
 
@@ -85,7 +82,7 @@ export default function HomeScreen() {
         <Button variant="outline" onClick={handleNextDay} size='icon' ><ChevronRight className="h-4 w-4" /></Button>
       </div>
 
-      <div className="grid grid-cols-1  gap-6 mb-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         <div className="border p-6 rounded-lg shadow-md">
           <h3 className="text-lg font-semibold mb-4">Activity Log</h3>
           <div className="overflow-x-auto">
@@ -101,8 +98,8 @@ export default function HomeScreen() {
                 {filteredActivities.map((activity) => (
                   <TableRow key={activity.id}>
                     <TableCell>
-                      {activity.type.charAt(0).toUpperCase() + activity.type.slice(1)}
-                    </TableCell>
+                    {activity.type.charAt(0).toUpperCase() + activity.type.slice(1)}
+                      </TableCell>
                     <TableCell>
                       {!activity.duration ? "-" : activity.duration + ' min'}
                     </TableCell>
@@ -114,17 +111,9 @@ export default function HomeScreen() {
               </TableBody>
             </Table>
           </div>
-
-          {/* Dialog Triggers */}
           <div className="mt-4 flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-2">
-            <Button variant="outline" className="w-full sm:w-auto" onClick={handleLogStepsClick}>
-              <Plus className="h-4 w-4 mr-2" />
-              Log Steps
-            </Button>
-            <Button className="w-full sm:w-auto" onClick={handleLogActivityClick}>
-              <Plus className="h-4 w-4 mr-2" />
-              Log Activity
-            </Button>
+          <LogStepsDialog handleClick={handleLogStepsClick} isOpen={isLogStepsOpen} onClose={setIsLogStepsOpen}   />
+          <LogActivityDialog handleClick={handleLogActivityClick} isOpen={isLogActivityOpen} onClose={setIsLogActivityOpen} />
           </div>
         </div>
 
@@ -143,20 +132,22 @@ export default function HomeScreen() {
       <Link to="/activity-log">
         <Button variant="outline" className="w-full sm:w-auto">View Full Activity Log</Button>
       </Link>
+    </div>
+  );
+}
 
-      {/* Render dialog components */}
-      <MyStatsDialog
-        isOpen={isMyStatsOpen}
-        onOpenChange={setIsMyStatsOpen}
-      />
-      <LogStepsDialog
-        isOpen={isLogStepsOpen}
-        onOpenChange={setIsLogStepsOpen}
-      />
-      <LogActivityDialog
-        isOpen={isLogActivityOpen}
-        onOpenChange={setIsLogActivityOpen}
-      />
+export function ProgressCard({ title, current, goal, unit, reverse = false }) {
+  const percentage = reverse
+    ? ((goal - current) / (goal - Math.min(current, goal))) * 100
+    : (current / goal) * 100;
+
+  return (
+    <div className="border p-4 rounded-lg shadow-md">
+      <h3 className="text-lg font-semibold mb-2">{title}</h3>
+      <div className="text-3xl font-bold mb-2">
+        {current.toFixed(1)} <span className="text-sm font-normal">/ {goal} {unit}</span>
+      </div>
+      <Progress value={percentage} className="h-2" />
     </div>
   );
 }

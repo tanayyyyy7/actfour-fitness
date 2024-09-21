@@ -6,9 +6,11 @@ import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useToast } from '@/hooks/use-toast';
 
-export default function MyStats() {
+export default function MyStats({ onClose }) {
   const { user, updateUser } = useContext(UserContext);
+  const { toast } = useToast();
   const [stats, setStats] = useState({
     weight: user.weight,
     height: user.height,
@@ -22,11 +24,17 @@ export default function MyStats() {
   const handleSubmit = (e) => {
     e.preventDefault();
     updateUser(stats);
+    toast({
+      title: 'Stats updated successfully',
+      description: 'Your stats have been updated successfully.',
+      variant: 'default',
+      duration: 2000,
+    });
+    onClose();
   };
 
   return (
-    <div className="max-w-md mx-auto p-4 sm:p-6 lg:p-8">
-      <h2 className="text-2xl font-semibold mb-4">My Stats</h2>
+    <div>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <Label htmlFor="weight">Weight (kg)</Label>
@@ -63,9 +71,8 @@ export default function MyStats() {
         </div>
         <Button type="submit">Update Stats</Button>
       </form>
-      <Link to="/">
-        <Button variant="outline" className="mt-4">Back to Home</Button>
-      </Link>
+     
+        <Button variant="outline" className="mt-4" onClick={() => onClose()}>Back to Home</Button>
     </div>
   );
 }
