@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 // LogSteps.jsx
-=======
->>>>>>> 97a64a4 (added responsive UI for components)
 import React, { useContext, useState } from 'react';
 import { ActivityContext } from './contexts/ActivityContext';
 import { UserContext } from './contexts/UserContext';

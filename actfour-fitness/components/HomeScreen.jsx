@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 // HomeScreen.jsx
-=======
->>>>>>> 97a64a4 (added responsive UI for components)
 import React, { useState, useContext } from 'react';
 import { format, subDays, addDays, isToday } from 'date-fns';
 import { ChevronLeft, ChevronRight, Plus } from 'lucide-react';
