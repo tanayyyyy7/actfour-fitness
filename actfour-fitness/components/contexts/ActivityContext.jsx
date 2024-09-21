@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 // src/contexts/ActivityContext.jsx
+=======
+>>>>>>> 97a64a4 (added responsive UI for components)
 import React, { createContext, useState, useEffect } from 'react';
 import { format } from 'date-fns';
 

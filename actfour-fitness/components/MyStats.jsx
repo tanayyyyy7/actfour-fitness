@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 // src/components/MyStats.jsx
+=======
+
+>>>>>>> 97a64a4 (added responsive UI for components)
 import React, { useContext, useState } from 'react';
 import { UserContext } from './contexts/UserContext';
 import { Link } from 'react-router-dom';
