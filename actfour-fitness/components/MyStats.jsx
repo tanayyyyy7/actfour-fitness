@@ -1,29 +1,30 @@
-import React, { useContext, useState } from 'react'
-import { UserContext } from './contexts/UserContext'
-import { Link } from 'react-router-dom'
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+// src/components/MyStats.jsx
+import React, { useContext, useState } from 'react';
+import { UserContext } from './contexts/UserContext';
+import { Link } from 'react-router-dom';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 export default function MyStats() {
-  const { user, updateUser } = useContext(UserContext)
+  const { user, updateUser } = useContext(UserContext);
   const [stats, setStats] = useState({
     weight: user.weight,
     height: user.height,
     goalWeight: user.goalWeight
-  })
+  });
 
   const handleChange = (e) => {
-    setStats({ ...stats, [e.target.name]: parseFloat(e.target.value) })
-  }
+    setStats({ ...stats, [e.target.name]: parseFloat(e.target.value) });
+  };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    updateUser(stats)
-  }
+    e.preventDefault();
+    updateUser(stats);
+  };
 
   return (
-    <div className="max-w-md mx-auto p-4">
+    <div className="max-w-md mx-auto p-4 sm:p-6 lg:p-8">
       <h2 className="text-2xl font-semibold mb-4">My Stats</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
@@ -65,5 +66,5 @@ export default function MyStats() {
         <Button variant="outline" className="mt-4">Back to Home</Button>
       </Link>
     </div>
-  )
+  );
 }

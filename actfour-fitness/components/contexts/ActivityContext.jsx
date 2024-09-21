@@ -1,30 +1,32 @@
-import React, { createContext, useState, useEffect } from 'react'
+// src/contexts/ActivityContext.jsx
+import React, { createContext, useState, useEffect } from 'react';
+import { format } from 'date-fns';
 
-export const ActivityContext = createContext()
+export const ActivityContext = createContext();
 
 export function ActivityProvider({ children }) {
   const [activities, setActivities] = useState(() => {
-    const savedActivities = localStorage.getItem('activities')
-    return savedActivities ? JSON.parse(savedActivities) : []
-  })
+    const savedActivities = localStorage.getItem('activities');
+    return savedActivities ? JSON.parse(savedActivities) : [];
+  });
 
   useEffect(() => {
-    localStorage.setItem('activities', JSON.stringify(activities))
-  }, [activities])
+    localStorage.setItem('activities', JSON.stringify(activities));
+  }, [activities]);
 
   const addActivity = (activity) => {
-    setActivities([...activities, { ...activity, id: Date.now() }])
-  }
+    setActivities([...activities, { ...activity, id: Date.now(), date: new Date() }]);
+  };
 
   const updateActivity = (updatedActivity) => {
     setActivities(activities.map(activity => 
       activity.id === updatedActivity.id ? updatedActivity : activity
-    ))
-  }
+    ));
+  };
 
   const deleteActivity = (id) => {
-    setActivities(activities.filter(activity => activity.id !== id))
-  }
+    setActivities(activities.filter(activity => activity.id !== id));
+  };
 
   const addSteps = (steps, distance, calories) => {
     setActivities([...activities, {
@@ -32,19 +34,25 @@ export function ActivityProvider({ children }) {
       type: 'Walking',
       steps,
       distance,
-      caloriesBurned: calories
-    }])
-  }
+      caloriesBurned: calories,
+      date: new Date()
+    }]);
+  };
 
-  const getTotalCaloriesBurned = () => {
-    return activities.reduce((total, activity) => total + (activity.caloriesBurned || 0), 0)
-  }
-
-  const getTotalSteps = () => {
+  const getTotalCaloriesBurned = (date) => {
     return activities
-      .filter(activity => activity.type === 'Walking')
-      .reduce((total, activity) => total + (activity.steps || 0), 0)
-  }
+      .filter(activity => format(new Date(activity.date), 'yyyy-MM-dd') === format(date, 'yyyy-MM-dd'))
+      .reduce((total, activity) => total + (activity.caloriesBurned || 0), 0);
+  };
+
+  const getTotalSteps = (date) => {
+    return activities
+      .filter(activity => 
+        activity.type === 'Walking' && 
+        format(new Date(activity.date), 'yyyy-MM-dd') === format(date, 'yyyy-MM-dd')
+      )
+      .reduce((total, activity) => total + (activity.steps || 0), 0);
+  };
 
   return (
     <ActivityContext.Provider value={{
@@ -58,5 +66,5 @@ export function ActivityProvider({ children }) {
     }}>
       {children}
     </ActivityContext.Provider>
-  )
+  );
 }
