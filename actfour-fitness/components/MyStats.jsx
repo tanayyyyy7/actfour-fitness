@@ -1,12 +1,11 @@
-// src/components/MyStats.jsx
-
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { UserContext } from './contexts/UserContext';
-import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from '@/hooks/use-toast';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 export default function MyStats({ onClose }) {
   const { user, updateUser } = useContext(UserContext);
@@ -16,6 +15,12 @@ export default function MyStats({ onClose }) {
     height: user.height,
     goalWeight: user.goalWeight
   });
+  const [weightHistory, setWeightHistory] = useState([]);
+
+  useEffect(() => {
+    const storedHistory = JSON.parse(localStorage.getItem('weightHistory') || '[]');
+    setWeightHistory(storedHistory);
+  }, []);
 
   const handleChange = (e) => {
     setStats({ ...stats, [e.target.name]: parseFloat(e.target.value) });
@@ -24,6 +29,11 @@ export default function MyStats({ onClose }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     updateUser(stats);
+
+    const newHistory = [...weightHistory, { date: new Date().toISOString().split('T')[0], weight: stats.weight }];
+    setWeightHistory(newHistory);
+    localStorage.setItem('weightHistory', JSON.stringify(newHistory));
+
     toast({
       title: 'Stats updated successfully',
       description: 'Your stats have been updated successfully.',
@@ -34,7 +44,7 @@ export default function MyStats({ onClose }) {
   };
 
   return (
-    <div>
+    <div className="space-y-6">
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <Label htmlFor="weight">Weight (kg)</Label>
@@ -71,8 +81,43 @@ export default function MyStats({ onClose }) {
         </div>
         <Button type="submit">Update Stats</Button>
       </form>
-     
-        <Button variant="outline" className="mt-4" onClick={() => onClose()}>Back to Home</Button>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Weight History</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart data={weightHistory}>
+              <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+              <XAxis 
+                dataKey="date" 
+                stroke="#888888"
+                fontSize={12}
+                tickLine={false}
+                axisLine={false}
+              />
+              <YAxis
+                stroke="#888888"
+                fontSize={12}
+                tickLine={false}
+                axisLine={false}
+                tickFormatter={(value) => `${value}kg`}
+              />
+              <Tooltip />
+              <Line 
+                type="monotone" 
+                dataKey="weight" 
+                stroke="#8884d8" 
+                strokeWidth={2} 
+                dot={{ fill: "#8884d8", strokeWidth: 2 }}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </CardContent>
+      </Card>
+      
+      <Button variant="outline" onClick={onClose}>Back to Home</Button>
     </div>
   );
 }

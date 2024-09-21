@@ -5,17 +5,16 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import MyStats from './MyStats';
 
 export default function MyStatsDialog({ isOpen, onOpenChange }) {
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent>
+      <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
-        <DialogTitle>My Stats</DialogTitle>
-        <DialogDescription>Update your current stats here.</DialogDescription>
+          <DialogTitle>My Stats</DialogTitle>
+          <DialogDescription>Update your current stats and view weight history.</DialogDescription>
         </DialogHeader>
         <MyStats onClose={() => onOpenChange(false)} />
       </DialogContent>
