@@ -1,0 +1,26 @@
+import React, { useState, useEffect } from 'react';
+import ProgressDial from './ProgressDial/ProgressDial';
+import './style.css';
+
+export default function App() {
+  const [val, setVal] = useState(0);
+  function increment() {
+    setVal(val + 40);
+  }
+  function decrement() {
+    setVal(val - 40);
+  }
+  return (
+    <div>
+      <ProgressDial
+        label="Cals Burnt"
+        unit="kCals"
+        value={val}
+        maxValue={500}
+      />
+      <button onClick={increment}>Increment +40</button>
+      <button onClick={decrement}>Decrement -40</button>
+      <p>State Value: {val}</p>
+    </div>
+  );
+}
