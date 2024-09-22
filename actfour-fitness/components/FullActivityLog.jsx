@@ -34,7 +34,7 @@ export default function FullActivityLog() {
   
     return (
       <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
-        <h2 className="text-2xl font-semibold mb-4">Activity Log</h2>
+        <h2 className="text-2xl font-semibold mb-4">Full Activity Log</h2>
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>

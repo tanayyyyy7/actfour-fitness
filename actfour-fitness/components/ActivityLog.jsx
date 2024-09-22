@@ -74,7 +74,6 @@ export default function ActivityLog({
                     variant="outline"
                     className="w-full sm:w-auto"
                     onClick={handleLogStepsClick}
-                    disabled={!isToday}
                 >
                     <Plus className="h-4 w-4 mr-2" />
                     Log Steps
@@ -82,7 +81,6 @@ export default function ActivityLog({
                 <Button
                     className="w-full sm:w-auto"
                     onClick={handleLogActivityClick}
-                    disabled={!isToday}
                 >
                     <Plus className="h-4 w-4 mr-2" />
                     Log Activity

@@ -101,12 +101,14 @@ export default function MyStats() {
                 axisLine={false}
               />
               <YAxis
-                stroke="#888888"
-                fontSize={12}
-                tickLine={false}
-                axisLine={false}
-                tickFormatter={(value) => `${value}kg`}
-              />
+                  stroke="#888888"
+                  fontSize={12}
+                  tickLine={false}
+                  axisLine={false}
+                  tickFormatter={(value) => `${value}kg`}
+                  domain={[40, 120]}
+                  ticks={[40, 60, 80, 100, 120]}
+                />
               <Tooltip />
               <Line 
                 type="monotone" 
