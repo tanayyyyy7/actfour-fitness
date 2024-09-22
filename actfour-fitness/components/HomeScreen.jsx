@@ -34,12 +34,28 @@ export default function HomeScreen() {
   );
 
   const handleLogStepsClick = () => {
-    if (isToday(currentDate)) {
+
+    if(user.calorieGoal && isToday(currentDate)) {
       setIsLogStepsOpen(true);
-    } else {
+    } else if(user.calorieGoal && !isToday(currentDate)) {
       toast({
         title: 'Error',
         description: 'You can only log steps for the current date.',
+        variant: 'destructive',
+        duration: 2000,
+      });
+    }else if(!user.calorieGoal && isToday(currentDate)) {
+      toast({
+        title: 'Error',
+        description: 'You have not set your calorie goal.',
+        variant: 'destructive',
+        duration: 2000,
+      });
+    }
+    else if(!user.calorieGoal && !isToday(currentDate)) {
+      toast({
+        title: 'Error',
+        description: 'You have not set your calorie goal & You can only log steps for the current date.',
         variant: 'destructive',
         duration: 2000,
       });
@@ -47,17 +63,32 @@ export default function HomeScreen() {
   };
 
   const handleLogActivityClick = () => {
-    if (isToday(currentDate)) {
-      setIsLogActivityOpen(true);
-    } else {
+    if(user.calorieGoal && isToday(currentDate)) {
+      setIsLogStepsOpen(true);
+    } else if(user.calorieGoal && !isToday(currentDate)) {
       toast({
         title: 'Error',
         description: 'You can only add activities for the current date.',
         variant: 'destructive',
         duration: 2000,
       });
+    }else if(!user.calorieGoal && isToday(currentDate)) {
+      toast({
+        title: 'Error',
+        description: 'You have not set your calorie goal.',
+        variant: 'destructive',
+        duration: 2000,
+      });
     }
-  };
+    else if(!user.calorieGoal && !isToday(currentDate)) {
+      toast({
+        title: 'Error',
+        description: 'You have not set your calorie goal & You can only add activities for the current date.',
+        variant: 'destructive',
+        duration: 2000,
+      });
+    }
+  }
 
   const handleSetCalorieGoal = () => {
     if (!user.calorieGoal) {
@@ -85,9 +116,9 @@ export default function HomeScreen() {
       </header>
 
       <div className="flex justify-around items-center mb-6">
-        <Button variant="outline" onClick={handlePrevDay} size='icon'><ChevronLeft className="h-4 w-4" /></Button>
+        <Button variant="default" onClick={handlePrevDay} size='icon'><ChevronLeft className="h-4 w-4" /></Button>
         <h2 className="text-xl font-semibold">{format(currentDate, 'MMMM d, yyyy')}</h2>
-        <Button variant="outline" onClick={handleNextDay} size='icon' ><ChevronRight className="h-4 w-4" /></Button>
+        <Button variant="default" onClick={handleNextDay} size='icon' ><ChevronRight className="h-4 w-4" /></Button>
       </div>
 
       <div className="grid grid-cols-1 gap-6 mb-6">
@@ -101,7 +132,7 @@ export default function HomeScreen() {
         <Button className="w-fit" onClick={() => navigate('/full-activity-log')}>
           Full Activity Log
         </Button>
-        <Button variant="default" className="w-fit" onClick={handleSetCalorieGoal}>Set Calorie Goal</Button>
+        <Button variant="default" className="w-fit" onClick={handleSetCalorieGoal} disabled={!isToday(currentDate)}>Set Calorie Goal</Button>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <ProgressCard title="Steps" current={totalSteps} goal={10000} unit="steps" />
