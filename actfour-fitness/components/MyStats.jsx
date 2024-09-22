@@ -7,7 +7,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
-export default function MyStats({ onClose }) {
+export default function MyStats() {
   const { user, updateUser } = useContext(UserContext);
   const { toast } = useToast();
   const [stats, setStats] = useState({
@@ -40,41 +40,44 @@ export default function MyStats({ onClose }) {
       variant: 'default',
       duration: 2000,
     });
-    onClose();
   };
 
   return (
     <div className="space-y-6">
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <Label htmlFor="weight">Weight (kg)</Label>
-          <Input
-            id="weight"
-            name="weight"
-            type="number"
-            value={stats.weight}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
+      <form onSubmit={handleSubmit} className="space-y-4 flex flex-col">
+       
+          <div className="w-fit">
+            <Label htmlFor="weight">Weight (kg)</Label>
+            <Input
+              className=""
+              id="weight"
+              name="weight"
+              type="number"
+              value={stats.weight}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="w-fit">
+            <Label htmlFor="goalWeight">Goal Weight (kg)</Label>
+            <Input
+              className=""
+              id="goalWeight"
+              name="goalWeight"
+              type="number"
+              value={stats.goalWeight}
+              onChange={handleChange}
+              required
+            />
+          </div>
+        <div className="w-fit">
           <Label htmlFor="height">Height (cm)</Label>
           <Input
+            className=""
             id="height"
             name="height"
             type="number"
             value={stats.height}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <Label htmlFor="goalWeight">Goal Weight (kg)</Label>
-          <Input
-            id="goalWeight"
-            name="goalWeight"
-            type="number"
-            value={stats.goalWeight}
             onChange={handleChange}
             required
           />
@@ -86,7 +89,7 @@ export default function MyStats({ onClose }) {
         <CardHeader>
           <CardTitle>Weight History</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className='pl-0'>
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={weightHistory}>
               <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
@@ -116,8 +119,6 @@ export default function MyStats({ onClose }) {
           </ResponsiveContainer>
         </CardContent>
       </Card>
-      
-      <Button variant="outline" onClick={onClose}>Back to Home</Button>
     </div>
   );
 }

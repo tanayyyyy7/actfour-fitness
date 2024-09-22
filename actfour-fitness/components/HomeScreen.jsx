@@ -1,3 +1,4 @@
+// src/components/HomeScreen.jsx
 import React, { useState, useContext } from 'react';
 import { format, subDays, addDays, isToday } from 'date-fns';
 import { ChevronLeft, ChevronRight, Plus } from 'lucide-react';
@@ -18,7 +19,6 @@ import { ModeToggle } from '@/components/mode-toggle';
 import { useToast } from '@/hooks/use-toast';
 import LogStepsDialog from './LogStepsDialog';
 import LogActivityDialog from './LogActivityDialog';
-import MyStatsDialog from './MyStatsDialog';
 
 export default function HomeScreen() {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -27,7 +27,6 @@ export default function HomeScreen() {
   const { toast } = useToast();
   const [isLogStepsOpen, setIsLogStepsOpen] = useState(false);
   const [isLogActivityOpen, setIsLogActivityOpen] = useState(false);
-  const [isMyStatsOpen, setIsMyStatsOpen] = useState(false);
 
   const handlePrevDay = () => setCurrentDate(subDays(currentDate, 1));
   const handleNextDay = () => setCurrentDate(addDays(currentDate, 1));
@@ -38,10 +37,6 @@ export default function HomeScreen() {
   const filteredActivities = activities.filter(activity =>
     format(new Date(activity.date), 'yyyy-MM-dd') === format(currentDate, 'yyyy-MM-dd')
   );
-
-  const handleMyStatsClick = () => {
-    setIsMyStatsOpen(true);
-  };
 
   const handleLogStepsClick = () => {
     if (isToday(currentDate)) {
@@ -70,16 +65,18 @@ export default function HomeScreen() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
-      <header className="flex flex-col sm:flex-row justify-between items-center mb-6">
+    <div className="min-w-screen mx-auto p-4 py-2 sm:p-6 lg:py-2 lg:p-8">
+      <header className="flex flex-col sm:flex-row justify-between items-center mb-6 py-4 border-b">
         <h1 className="text-2xl font-bold mb-4 sm:mb-0">ACT4 FITNESS</h1>
         <div className="flex items-center space-x-4">
           <ModeToggle />
-          <Button variant="outline" onClick={handleMyStatsClick}>My Stats</Button>
+          <Link to="/my-stats">
+            <Button variant="outline">My Stats</Button>
+          </Link>
         </div>
       </header>
 
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex justify-around items-center mb-6">
         <Button variant="outline" onClick={handlePrevDay} size='icon'><ChevronLeft className="h-4 w-4" /></Button>
         <h2 className="text-xl font-semibold">{format(currentDate, 'MMMM d, yyyy')}</h2>
         <Button variant="outline" onClick={handleNextDay} size='icon' ><ChevronRight className="h-4 w-4" /></Button>
@@ -117,6 +114,7 @@ export default function HomeScreen() {
 
           {/* Dialog Triggers */}
           <div className="mt-4 flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-2">
+
             <Button variant="outline" className="w-full sm:w-auto" onClick={handleLogStepsClick}>
               <Plus className="h-4 w-4 mr-2" />
               Log Steps
@@ -140,15 +138,11 @@ export default function HomeScreen() {
           />
         </div>
       </div>
-      <Link to="/activity-log">
+      <Link to="/full-activity-log">
         <Button variant="outline" className="w-full sm:w-auto">View Full Activity Log</Button>
       </Link>
 
       {/* Render dialog components */}
-      <MyStatsDialog
-        isOpen={isMyStatsOpen}
-        onOpenChange={setIsMyStatsOpen}
-      />
       <LogStepsDialog
         isOpen={isLogStepsOpen}
         onOpenChange={setIsLogStepsOpen}

@@ -13,7 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
-export default function ActivityLog() {
+export default function FullActivityLog() {
     const { activities, updateActivity, deleteActivity } = useContext(ActivityContext);
     const [editingId, setEditingId] = useState(null);
     const [editedActivity, setEditedActivity] = useState({});

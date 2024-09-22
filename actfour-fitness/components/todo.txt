@@ -1,13 +1,1 @@
-Create UserContext: Implement the functionality to create a UserContext that stores user information such as weight, height, and goal weight. This context will be used throughout the app to track and update user data.
-
-Welcome Screen & Daily Snapshot: Design and develop a welcome screen that displays today's rundown. This includes showcasing the exercises done, energy expended (calories burned), steps taken towards the daily goal of 10,000 steps, total calories burned, and progress towards the weight goal.
-
-Fine-tuning Your Fitness Data: Implement the ability for users to make adjustments to their workout details. This includes allowing users to modify exercise details, change the motion type, and adjust the duration of the workout.
-
-Time Travel Through Your Training: Develop a feature that allows users to navigate through their workout history. Users should be able to view past workout logs but only make changes to the current day's log.
-
-Add a Dash of Activity: Implement the functionality to add new workouts to the daily log. Users should be able to select a workout type, choose the motion, and set the duration. The added workout should contribute to the daily calorie burn.
-
-Step Counter: Develop a step counter feature that allows users to log their daily step count. The app should calculate the total distance traveled and calories burned based on the step count.
-
-My Stats - Your Fitness Diary: Create a profile section where users can enter their weight and height. The height should be a one-time entry, while weight logs can be updated regularly. The app should display the user's weight journey towards their goal weight and keep track of calorie counts accurately. Additionally, users should be able to set their goal weight in this section.
+Convert MyStats component to something other than dialog component & make it responsive
