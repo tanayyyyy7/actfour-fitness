@@ -1,5 +1,4 @@
-// src/components/HomeScreen.jsx
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { format, subDays, addDays, isToday } from 'date-fns';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -12,7 +11,7 @@ import { ModeToggle } from '@/components/mode-toggle';
 import { useToast } from '@/hooks/use-toast';
 import LogStepsDialog from './LogStepsDialog';
 import LogActivityDialog from './LogActivityDialog';
-import { Navigate } from 'react-router-dom';
+import CalorieGoalDialog from './CalorieGoalDialog';
 
 export default function HomeScreen() {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -22,6 +21,7 @@ export default function HomeScreen() {
   const navigate = useNavigate();
   const [isLogStepsOpen, setIsLogStepsOpen] = useState(false);
   const [isLogActivityOpen, setIsLogActivityOpen] = useState(false);
+  const [isCalorieGoalOpen, setIsCalorieGoalOpen] = useState(false);
 
   const handlePrevDay = () => setCurrentDate(subDays(currentDate, 1));
   const handleNextDay = () => setCurrentDate(addDays(currentDate, 1));
@@ -59,6 +59,19 @@ export default function HomeScreen() {
     }
   };
 
+  const handleSetCalorieGoal = () => {
+    if (!user.calorieGoal) {
+      setIsCalorieGoalOpen(true);
+    } else {
+      toast({
+        title: 'Error',
+        description: 'You have already set your calorie goal.',
+        variant: 'destructive',
+        duration: 2000,
+      });
+    }
+  };
+
   return (
     <div className="min-w-screen p-4 py-2 sm:p-6 lg:py-2 lg:p-8">
       <header className="flex flex-col sm:flex-row justify-between items-center mb-6 py-4 border-b">
@@ -84,14 +97,15 @@ export default function HomeScreen() {
           handleLogActivityClick={handleLogActivityClick}
           isToday={isToday(currentDate)}
         />
-        
-          <Button className="w-fit" onClick={() => navigate('/full-activity-log')}>
-            Full Activity Log
-          </Button>
-
+       <div className='text-lg mb-4 flex flex-row justify-between'>
+        <Button className="w-fit" onClick={() => navigate('/full-activity-log')}>
+          Full Activity Log
+        </Button>
+        <Button variant="default" className="w-fit" onClick={handleSetCalorieGoal}>Set Calorie Goal</Button>
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <ProgressCard title="Steps" current={totalSteps} goal={10000} unit="steps" />
-          <ProgressCard title="Calories Burnt" current={totalCalories} goal={2000} unit="cal" />
+          <ProgressCard title="Calories Burnt" current={totalCalories} goal={user.calorieGoal} unit="cal" />
           <ProgressCard
             title="Goal Weight"
             current={user.weight}
@@ -102,7 +116,6 @@ export default function HomeScreen() {
         </div>
       </div>
 
-
       {/* Render dialog components */}
       <LogStepsDialog
         isOpen={isLogStepsOpen}
@@ -111,6 +124,10 @@ export default function HomeScreen() {
       <LogActivityDialog
         isOpen={isLogActivityOpen}
         onOpenChange={setIsLogActivityOpen}
+      />
+      <CalorieGoalDialog
+        open={isCalorieGoalOpen}
+        onOpenChange={setIsCalorieGoalOpen}
       />
     </div>
   );

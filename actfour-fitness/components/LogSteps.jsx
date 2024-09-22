@@ -1,4 +1,3 @@
-// LogSteps.jsx
 import React, { useContext, useState } from 'react';
 import { ActivityContext } from './contexts/ActivityContext';
 import { UserContext } from './contexts/UserContext';

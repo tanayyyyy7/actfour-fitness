@@ -1,4 +1,3 @@
-// AddActivity.jsx
 import React, { useContext, useState, useMemo } from 'react';
 import { ActivityContext } from './contexts/ActivityContext';
 import { UserContext } from './contexts/UserContext';

@@ -1,7 +1,5 @@
-// src/components/ActivityLog.jsx
 import React from 'react';
-import { Plus, Info, PencilRuler, BadgeInfo } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Plus, BadgeInfo } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import {
     Table,
@@ -18,7 +16,6 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-
 export default function ActivityLog({
     activities,
     handleLogStepsClick,
@@ -26,34 +23,33 @@ export default function ActivityLog({
     isToday
 }) {
     return (
-        <div className="border p-6 rounded-lg shadow-md">
-            <div className='text-lg mb-4 flex flex-row justify-between'>
-                <h3 className="font-semibold w-fit">Activity Log</h3>
-
+        <div className="border border-border rounded-lg shadow-md bg-card text-card-foreground">
+            <div className='p-4 flex flex-row justify-between items-center border-b border-border'>
+                <h3 className="text-lg font-semibold">Activity Log</h3>
                 <TooltipProvider>
                     <Tooltip>
-                        <TooltipTrigger >
-                                <BadgeInfo className="h-5 w-5 mr-2" />
+                        <TooltipTrigger>
+                            <BadgeInfo className="h-5 w-5 text-muted-foreground" />
                         </TooltipTrigger>
                         <TooltipContent>
-                            <p>To view or edit all previous records, Click the button below the table</p>
-                            </TooltipContent>
+                            <p>To view all the previous records or edit today's records, click the button below the table</p>
+                        </TooltipContent>
                     </Tooltip>
                 </TooltipProvider>
             </div>
-            <div className="overflow-x-auto">
+            <div className="p-4 overflow-x-auto">
                 <Table>
                     <TableHeader>
-                        <TableRow className='text-base'>
-                            <TableHead>Activity</TableHead>
-                            <TableHead>Duration</TableHead>
-                            <TableHead>Calories</TableHead>
+                        <TableRow>
+                            <TableHead className="text-base">Activity</TableHead>
+                            <TableHead className="text-base">Duration</TableHead>
+                            <TableHead className="text-base">Calories</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
                         {activities.map((activity) => (
                             <TableRow key={activity.id}>
-                                <TableCell>
+                                <TableCell className="font-medium">
                                     {activity.type.charAt(0).toUpperCase() + activity.type.slice(1)}
                                 </TableCell>
                                 <TableCell>
@@ -67,9 +63,7 @@ export default function ActivityLog({
                     </TableBody>
                 </Table>
             </div>
-
-            {/* Dialog Triggers */}
-            <div className="mt-4 flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-2">
+            <div className="p-4 flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-2 border-t border-border">
                 <Button
                     variant="outline"
                     className="w-full sm:w-auto"
