@@ -82,6 +82,11 @@ export default function HomeScreen() {
           handleLogActivityClick={handleLogActivityClick}
           isToday={isToday(currentDate)}
         />
+        <Link to="/full-activity-log">
+                    <Button className="w-full sm:w-auto">
+                        Full Activity Log
+                    </Button>
+                </Link>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <ProgressCard title="Steps" current={totalSteps} goal={10000} unit="steps" />
@@ -95,9 +100,7 @@ export default function HomeScreen() {
           />
         </div>
       </div>
-      <Link to="/full-activity-log">
-        <Button variant="outline" className="w-full sm:w-auto">View Full Activity Log</Button>
-      </Link>
+      
 
       {/* Render dialog components */}
       <LogStepsDialog
