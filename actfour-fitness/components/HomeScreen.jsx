@@ -2,7 +2,7 @@
 import React, { useState, useContext } from 'react';
 import { format, subDays, addDays, isToday } from 'date-fns';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import ProgressCard from './ProgressCard';
 import ActivityLog from './ActivityLog';
@@ -12,12 +12,14 @@ import { ModeToggle } from '@/components/mode-toggle';
 import { useToast } from '@/hooks/use-toast';
 import LogStepsDialog from './LogStepsDialog';
 import LogActivityDialog from './LogActivityDialog';
+import { Navigate } from 'react-router-dom';
 
 export default function HomeScreen() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const { activities, getTotalCaloriesBurned, getTotalSteps } = useContext(ActivityContext);
   const { user } = useContext(UserContext);
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [isLogStepsOpen, setIsLogStepsOpen] = useState(false);
   const [isLogActivityOpen, setIsLogActivityOpen] = useState(false);
 
@@ -82,11 +84,10 @@ export default function HomeScreen() {
           handleLogActivityClick={handleLogActivityClick}
           isToday={isToday(currentDate)}
         />
-        <Link to="/full-activity-log">
-          <Button className="w-full sm:w-auto">
+        
+          <Button className="w-fit" onClick={() => navigate('/full-activity-log')}>
             Full Activity Log
           </Button>
-        </Link>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <ProgressCard title="Steps" current={totalSteps} goal={10000} unit="steps" />
