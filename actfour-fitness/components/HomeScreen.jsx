@@ -60,7 +60,7 @@ export default function HomeScreen() {
   };
 
   return (
-    <div className="min-w-screen mx-auto p-4 py-2 sm:p-6 lg:py-2 lg:p-8">
+    <div className="min-w-screen p-4 py-2 sm:p-6 lg:py-2 lg:p-8">
       <header className="flex flex-col sm:flex-row justify-between items-center mb-6 py-4 border-b">
         <h1 className="text-2xl font-bold mb-4 sm:mb-0">ACT4 FITNESS</h1>
         <div className="flex items-center space-x-4">

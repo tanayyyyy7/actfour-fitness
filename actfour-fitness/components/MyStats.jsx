@@ -7,6 +7,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
+
 export default function MyStats() {
   const { user, updateUser } = useContext(UserContext);
   const { toast } = useToast();
@@ -44,47 +45,6 @@ export default function MyStats() {
 
   return (
     <div className="space-y-6">
-      <form onSubmit={handleSubmit} className="space-y-4 flex flex-col">
-       
-          <div className="w-fit">
-            <Label htmlFor="weight">Weight (kg)</Label>
-            <Input
-              className=""
-              id="weight"
-              name="weight"
-              type="number"
-              value={stats.weight}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="w-fit">
-            <Label htmlFor="goalWeight">Goal Weight (kg)</Label>
-            <Input
-              className=""
-              id="goalWeight"
-              name="goalWeight"
-              type="number"
-              value={stats.goalWeight}
-              onChange={handleChange}
-              required
-            />
-          </div>
-        <div className="w-fit">
-          <Label htmlFor="height">Height (cm)</Label>
-          <Input
-            className=""
-            id="height"
-            name="height"
-            type="number"
-            value={stats.height}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <Button type="submit">Update Stats</Button>
-      </form>
-
       <Card>
         <CardHeader>
           <CardTitle>Weight History</CardTitle>
@@ -121,6 +81,50 @@ export default function MyStats() {
           </ResponsiveContainer>
         </CardContent>
       </Card>
+      <form onSubmit={handleSubmit} className="space-y-4 flex flex-col">
+          <div className='flex flex-wrap sm:justify-around'> 
+          <div className="w-fit">
+            <Label htmlFor="weight">Weight (kg)</Label>
+            <Input
+              className=""
+              id="weight"
+              name="weight"
+              type="number"
+              value={stats.weight}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="w-fit">
+            <Label htmlFor="goalWeight">Goal Weight (kg)</Label>
+            <Input
+              className=""
+              id="goalWeight"
+              name="goalWeight"
+              type="number"
+              value={stats.goalWeight}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          
+        <div className="w-fit">
+          <Label htmlFor="height">Height (cm)</Label>
+          <Input
+            className=""
+            id="height"
+            name="height"
+            type="number"
+            value={stats.height}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        </div>
+        <Button type="submit">Update Stats</Button>
+      </form>
+
+      
     </div>
   );
 }
