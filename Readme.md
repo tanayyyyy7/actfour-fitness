@@ -45,9 +45,8 @@ actfour-fitness/
 ├── styles.css
 ├── tailwind.config.js
 └── vite.config.js
-```
 
-```plaintext
+```
 
 ## Getting Started
 
@@ -57,21 +56,21 @@ actfour-fitness/
 git clone [https://github.com/yourusername/actfour-fitness.git](https://github.com/yourusername/actfour-fitness.git)
 cd actfour-fitness
 
-```plaintext
+```
 
 2. Install dependencies:
 ```
 
 npm install
 
-```plaintext
+```
 
 3. Start the development server:
 ```
 
 npm run dev
 
-```plaintext
+```
 
 4. Open your browser and visit `http://localhost:5173` to see the app running.
 
@@ -83,7 +82,7 @@ To create a production build, run:
 
 npm run build
 
-```plaintext
+```
 
 The built files will be in the `dist/` directory.
 
