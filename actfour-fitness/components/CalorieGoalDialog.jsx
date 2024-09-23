@@ -68,7 +68,7 @@ export default function CalorieGoalDialog({ open, onOpenChange }) {
               <span className="sr-only">Decrease</span>
             </Button>
             <div className="flex-1 text-center">
-              <div className="text-7xl font-bold tracking-tighter text-primary">
+              <div className="text-7xl font-bold tracking-tighter">
                 {goal}
               </div>
               <div className="text-sm uppercase text-muted-foreground">

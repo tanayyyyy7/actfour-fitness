@@ -11,10 +11,12 @@ export default function MyStats() {
   const { user, updateUser } = useContext(UserContext);
   const { toast } = useToast();
   const [stats, setStats] = useState({
+    initialWeight: user.initialWeight,
     weight: user.weight,
     height: user.height,
     goalWeight: user.goalWeight
   });
+
   const [weightHistory, setWeightHistory] = useState([]);
 
   useEffect(() => {
@@ -94,6 +96,18 @@ export default function MyStats() {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="space-y-2">
+                <Label htmlFor="initialWeight" className="text-sm font-medium">Initial Weight (kg)</Label>
+                <Input
+                  id="initialWeight"
+                  name="initialWeight"
+                  type="number"
+                  value={stats.initialWeight}
+                  onChange={handleChange}
+                  required
+                  className="bg-background text-foreground"
+                />
+              </div>
               <div className="space-y-2">
                 <Label htmlFor="weight" className="text-sm font-medium">Weight (kg)</Label>
                 <Input

@@ -64,7 +64,7 @@ export default function HomeScreen() {
 
   const handleLogActivityClick = () => {
     if(user.calorieGoal && isToday(currentDate)) {
-      setIsLogStepsOpen(true);
+      setIsLogActivityOpen(true);
     } else if(user.calorieGoal && !isToday(currentDate)) {
       toast({
         title: 'Error',
