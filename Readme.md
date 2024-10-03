@@ -97,6 +97,3 @@ npm run build
 ```
 
 The built files will be in the `dist/` directory.
-
-
-This README.md provides an overview of your ACT4 FITNESS app, including its features, tech stack, project structure, and instructions for getting started and building for production. You may want to customize it further based on any specific details or requirements for your project.
