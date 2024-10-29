@@ -98,4 +98,5 @@ npm run build
 
 The built files will be in the `dist/` directory.
 
+---
 This project is build for the `upGrad Frontend Development Hackathon`
